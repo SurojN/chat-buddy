@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     const aiText = data?.choices?.[0]?.message?.content || "No response";
 
     return NextResponse.json({ text: aiText });
-  } catch (err: any) {
+  } catch (err) {
     console.error("Groq API error:", err);
     return NextResponse.json({ error: "AI request failed" }, { status: 500 });
   }

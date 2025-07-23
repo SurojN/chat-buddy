@@ -14,7 +14,11 @@ export default function Chat() {
   ]);
   const [input, setInput] = useState<string>("");
   const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  type ApiResponse = {
+    text: string;
+  };
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -31,7 +35,7 @@ export default function Chat() {
         body: JSON.stringify({ message: userMessage }),
       });
 
-      const data = await res.json();
+      const data: ApiResponse = await res.json();
       setMessages((prev) => [...prev, { from: "ai", text: data.text }]);
     } catch (err) {
       console.error("AI error", err);
